@@ -1,1 +1,1 @@
-# captcha_recognition
+## Captch Recognition in Pytorch using CTC loss
