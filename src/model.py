@@ -29,7 +29,7 @@ class CaptchaModel(nn.Module):
         # print(x.size())
         x = x.permute((0, 3, 1, 2))  # bs, 75, 64, 18
         # print(x.size())
-        x = x.view(bs, x.size(1), -1)  # 75, bs , 64*18
+        x = x.view(bs, x.size(1), -1)  # bs, 75 , 64*18
         # print(x.size())
         x = self.linear_1(x)
         x = self.dropout_1(x)

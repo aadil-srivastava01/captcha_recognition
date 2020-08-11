@@ -11,7 +11,7 @@ from model import CaptchaModel
 import engine
 
 
-def decode(preds, encoder):
+def naive_decode(preds, encoder):
     preds = preds.permute(1, 0, 2)
     preds = torch.softmax(preds, 2)
     preds = torch.argmax(preds, 2)
@@ -25,8 +25,9 @@ def decode(preds, encoder):
                 temp.append('~')
             else:
                 temp.append(encoder.inverse_transform([k])[0])
-        tp = "".join(temp)
+        tp = "".join(x for x in temp if x != "~")
         cap_preds.append(tp)
+
     return cap_preds
 
 
@@ -73,7 +74,7 @@ def run_training():
         print(f"Train Loss: {train_loss} , Validation Loss: {val_loss}")
         val_cap_pred = []
         for vp in val_preds:
-            current_preds = decode(vp, lbl_enc)
+            current_preds = naive_decode(vp, lbl_enc)
             val_cap_pred.extend(current_preds)
         pprint(list(zip(test_orig_targets, val_cap_pred))[5:11])
 
