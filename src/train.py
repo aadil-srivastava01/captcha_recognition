@@ -80,13 +80,13 @@ def run_training():
         val_cap_pred = []
 
         for vp in val_preds:
-            # vp = vp.permute(1, 0, 2)
-            # vp = torch.softmax(vp, 2).detach().cpu().numpy()
-            # current_preds = ctcBeamSearch(vp[0], classes, lm=None)
-            # print(current_preds)
-            current_preds = naive_decode(vp, lbl_enc)
-            val_cap_pred.extend(current_preds)
-        pprint(list(zip(test_orig_targets, val_cap_pred))[5:11])
+            vp = vp.permute(1, 0, 2)
+            vp = torch.softmax(vp, 2).detach().cpu().numpy()
+            current_preds = ctcBeamSearch(vp[0], classes, lm=None)
+            print(current_preds)
+        #     current_preds = naive_decode(vp, lbl_enc)
+        #     val_cap_pred.extend(current_preds)
+        # pprint(list(zip(test_orig_targets, val_cap_pred))[5:11])
 
 
 if __name__ == "__main__":
