@@ -10,8 +10,6 @@ import dataset
 from model import CaptchaModel
 import engine
 
-from decoder import ctcBeamSearch
-
 
 def naive_decode(preds, encoder):
     preds = preds.permute(1, 0, 2)
@@ -72,6 +70,8 @@ def run_training():
     for epoch in range(config.EPOCHS):
         print(f"Epoch: {epoch}")
         train_loss = engine.train(model, train_loader, optimizer)
+
+        scheduler.step(train_loss)
 
         val_preds, val_loss = engine.eval(model, test_loader)
         print(f"Train Loss: {train_loss} , Validation Loss: {val_loss}")
